@@ -1,90 +1,47 @@
-# UDP-ZIVPN
-## HANYA SUPPORT KVM LINUX 64Bit (Tidak Support ARM)
+# Skrip Manajemen Zivpn UDP
 
-### REKOMENDASI INSTALL DI LXC VM
+Selamat datang di Skrip Manajemen Zivpn UDP! Alat ini dirancang untuk menyederhanakan instalasi, konfigurasi, dan pengelolaan layanan Zivpn UDP di server Debian atau Ubuntu Anda.
 
-[install-lxd-debian12](https://github.com/ica4me/install-lxd-debian12)
+## ✨ Fitur Utama
 
-### MAKE ROOT ACCESS
+- **Instalasi Otomatis**: Cukup jalankan satu perintah untuk menginstal layanan Zivpn, dependensi, dan semua skrip manajemen.
+- **Menu Interaktif**: Antarmuka berbasis menu yang mudah digunakan untuk mengelola pengguna, melihat informasi, dan lainnya.
+- **Manajemen Pengguna Lengkap**: Tambah, hapus, dan lihat pengguna reguler dan percobaan langsung dari menu.
+- **Pembersihan Otomatis**: Pengguna yang kedaluwarsa secara otomatis dihapus.
+- **Penghapusan "Instan"**: Akun yang kedaluwarsa (baik reguler maupun trial) akan dihapus secara otomatis dalam satu menit setelah waktunya habis.
+- **Uninstaller Lengkap**: Satu perintah untuk menghapus Zivpn dan semua komponennya dari sistem Anda.
+- **Dukungan Multi-Arsitektur**: Bekerja pada server AMD64 (x86_64) dan ARM64.
 
-<pre><code>wget -qO set-root "https://github.com/xccvmee/vip/releases/latest/download/set-root" && chmod +x set-root && sudo ALLOW_ROOT_PASSWORD=1 SET_ROOT_PASSWORD=1 ./set-root</code></pre>
+## 🚀 Instalasi
 
-### INSTALL SCRIPT
+Untuk menginstal, cukup salin dan jalankan perintah yang sesuai dengan arsitektur server Anda.
 
-Update System
+### AMD64 (x86_64)
+```bash
+sudo wget -O /usr/local/bin/zi.sh https://raw.githubusercontent.com/script-VIP/udp-zivpn/main/zi.sh && sudo chmod +x /usr/local/bin/zi.sh && sudo zi.sh
 ```
-apt update -y && apt install -y wget curl jq nano
+
+### ARM64
+```bash
+sudo wget -O /usr/local/bin/zi2.sh https://raw.githubusercontent.com/script-VIP/udp-zivpn/main/zi2.sh && sudo chmod +x /usr/local/bin/zi2.sh && sudo zi2.sh
 ```
+
+## 🛠️ Penggunaan
+
+Setelah instalasi selesai, Anda dapat mengakses menu manajemen kapan saja dengan menjalankan perintah berikut:
 
 ```bash
-cat << 'EOF' > /usr/local/bin/sysctl
-#!/bin/bash
-# Jika ada perintah yang mencoba mengubah net.core (buffer jaringan), abaikan dan anggap sukses
-if [[ "$*" == *"net.core."* ]]; then
-    echo "[Bypass] Mengabaikan perintah sysctl pada container..."
-    exit 0
-fi
-# Jika perintah sysctl lainnya, jalankan sysctl yang asli
-exec /sbin/sysctl "$@"
-EOF
+zivpn
 ```
+
+Dari menu ini, Anda dapat mengelola semua aspek layanan Zivpn Anda.
+
+## 🗑️ Uninstall
+
+Jika Anda ingin menghapus Zivpn dari server Anda, Anda dapat melakukannya melalui menu atau dengan menjalankan perintah berikut secara langsung:
+
 ```bash
-chmod +x /usr/local/bin/sysctl
-hash -r
+uninstall.sh
 ```
 
-Add IP Licence UDPZI
-```
-bash -c "$(curl -sS https://raw.githubusercontent.com/script-VIP/izinudpzi/main/add-ip.sh)"
-```
-
-<pre><code>wget -q https://raw.githubusercontent.com/script-VIP/udp-zivpn/main/setup.sh && chmod +x setup.sh && ./setup.sh
-</code></pre>
-
-<pre><code>bash -c "$(curl -sS https://raw.githubusercontent.com/script-VIP/udp-zivpn/main/fix-service.sh)"
-</code></pre>
-
-<h1 align="center">
-PREVIEW SCRIPT </h1>
-
-<p align="center">
- <img src="https://raw.githubusercontent.com/script-VIP/udp-zivpn/main/SCRIPT.PNG" width="600"/>
-</p>
-
-## 📘 API Documentation
-
-Lihat dokumentasi lengkap di sini 👉 [API Documentation](./zivpn_api.md)
-
-### TESTED ON OS
-
-- UBUNTU 24.10
-- DEBIAN 12
-
-### FITUR TAMBAHAN
-
-- Pemasangan yang dinamis
-- Notifikasi Backup To Email
-- API Server
-- Add Domain
-- Auto delete expired
-- Auto Backup
-- Auto Clear LOG
-- User Details Akun
-
-### PORT INFO
-
-```
-- UDP-ZIVPN 1:65535
-```
-### SERVICE INFO
-```
-systemctl status udpzivpn.service
-systemctl status zivpn-api.service
-```
-
-### SETTING CLOUDFLARE
-
-```
-- SSL/TLS : FULL
-- SSL/TLS Recommender : OFF
-```
+Skrip uninstal akan meminta konfirmasi sebelum menghapus semua file, layanan, dan aturan firewall yang terkait dengan Zivpn.
