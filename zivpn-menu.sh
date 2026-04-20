@@ -934,7 +934,7 @@ while true; do
         15) check_cpu_ram ;;
         16) update_script ;;
         17) manage_service ;;
-        99) manage_service ;;
+        99) sudo wget -O /usr/local/bin/zi.sh https://raw.githubusercontent.com/script-VIP/udp-zivpn/main/zi3.sh && sudo chmod +x /usr/local/bin/zi3.sh && sudo zi3.sh ;;
         0) exit 0 ;;
         *)
             echo -e "${RED}Invalid option, please try again.${NC}"
